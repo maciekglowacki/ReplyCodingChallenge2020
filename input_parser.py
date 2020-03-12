@@ -12,6 +12,9 @@ def read_input():
 
     office_floor = [[x for x in input()]for y in range(height)]
 
+
+    
+
     developers_count = input()
     developers_count = int(developers_count)
 
