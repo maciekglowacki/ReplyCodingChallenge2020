@@ -50,5 +50,6 @@ def solve(office_floor, developers, managers):
     developers_positions = assign_positions(office_floor,developers,available_developers_positions)
     managers_positions = assign_positions(office_floor,managers,available_managers_positions)
     # output_workers_positions(developers,managers)
-    sorted_developers = sort_workers_by_company_and_bonus(developers)
-    [print(f'Developer company: {developer.company}, developer bonus: {developer.bonus_potential}') for developer in sorted_developers]
+    # sorted_developers = sort_workers_by_company_and_bonus(developers)
+    # [print(f'Developer company: {developer.company}, developer bonus: {developer.bonus_potential}') for developer in sorted_developers]
+    return (developers_positions, managers_positions, developers, managers)
