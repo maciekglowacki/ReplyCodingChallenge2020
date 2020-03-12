@@ -1,6 +1,6 @@
 class Developer:
-    
-    def __init__(self,id,company,bonus_potential,skills_count,skills):
+
+    def __init__(self, id, company, bonus_potential, skills_count, skills):
         self.id = id
         self.company = company
         self.bonus_potential = bonus_potential
@@ -11,3 +11,6 @@ class Developer:
 
     def __str__(self):
         return f"Developer's id: {self.id} company: {self.company}, Bonus: {self.bonus_potential}, skills count: {self.skills_count}, skills: {self.skills}"
+
+    def __repr__(self):
+        return self.__str__()

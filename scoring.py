@@ -38,6 +38,7 @@ def get_score(floor, devs, pms):
       if p_right:
         if target == '_' and right == '_':
           result += get_work_potential(p_target, p_right)
+          result += get_bonus_potential(p_target,p_right)
         elif target == 'M' or target == '_' and right == 'M' or right == '_':
           result += get_bonus_potential(p_target, p_right)
       
@@ -45,6 +46,7 @@ def get_score(floor, devs, pms):
       if p_down:
         if target == '_' and down == '_':
           result += get_work_potential(p_target, p_down)
+          result += get_bonus_potential(p_target,p_down)
         elif p_down and target == 'M' or target == '_' and down == 'M' or down == '_':
           result += get_bonus_potential(p_target, p_down)
   

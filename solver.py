@@ -38,9 +38,17 @@ def output_workers_positions(developers, managers):
     [print(f'{manager.x} {manager.y}') if manager.x != 'X' else print(f'{manager.x}') for manager in managers]
 
 
+
+
+def sort_workers_by_company_and_bonus(workers):
+    sorted_workers = sorted(workers, key = lambda worker: (worker.company, worker.bonus_potential),reverse=True)
+    return sorted_workers
+
 def solve(office_floor, developers, managers):
     available_managers_positions = workers_positions(office_floor,"M")
     available_developers_positions = workers_positions(office_floor,"_")
     developers_positions = assign_positions(office_floor,developers,available_developers_positions)
     managers_positions = assign_positions(office_floor,managers,available_managers_positions)
-    output_workers_positions(developers,managers)
+    # output_workers_positions(developers,managers)
+    sorted_developers = sort_workers_by_company_and_bonus(developers)
+    [print(f'Developer company: {developer.company}, developer bonus: {developer.bonus_potential}') for developer in sorted_developers]
