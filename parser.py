@@ -20,7 +20,7 @@ def read_input():
         company = line[0]
         bonus_potential = line[1]
         skills_count = line[2]
-        skills = line[2:]
+        skills = line[3:]
         developers.append(Developer(company,bonus_potential,skills_count,skills))
 
     managers_count = input()
