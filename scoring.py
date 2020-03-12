@@ -11,44 +11,53 @@ def get_work_potential(dev1, dev2):
 
 def get_bonus_potential(emp1, emp2):
   if (emp1.company == emp2.company):
-    return emp1.bonus_potential + emp2.bonus_potential
+    return emp1.bonus_potential * emp2.bonus_potential
   return 0
 
 def _get_dev_or_pm(x, y, devs_and_pms):
   f = [p for p in devs_and_pms if p.x == x and p.y == y]
   return f[0] if f else None
 
+def _get_adjacent_score(e1, e2, emp1, emp2):
+  result = 0
+  if e1 == '_' and e2 == '_':
+    score = get_work_potential(emp1, emp2) + get_bonus_potential(emp1, emp2)
+    result += score
+  elif e1 == 'M' or e1 == '_' and e2 == 'M' or e2 == '_':
+    score = get_bonus_potential(emp1, emp2)
+    result += score
+  return result
+
 def get_score(floor, devs, pms):
   devs_and_pms = devs + pms
   result = 0
+  # verticaly
   for y in range(len(floor) - 1):
-    for x in range(len(floor[y]) - 1):
+    for x in range(len(floor[y])):
       target = floor[y][x]
-      right = floor[y][x + 1]
-      down = floor[y + 1][x]
+      next = floor[y + 1][x]
 
       p_target = _get_dev_or_pm(x, y, devs_and_pms)
-      p_right = _get_dev_or_pm(x + 1, y, devs_and_pms)
-      p_down = _get_dev_or_pm(x, y + 1, devs_and_pms)
+      p_next = _get_dev_or_pm(x, y + 1, devs_and_pms)
 
-      if not p_target:
+      if not (p_target and p_next):
         continue
 
-      # horizontaly
-      if p_right:
-        if target == '_' and right == '_':
-          result += get_work_potential(p_target, p_right)
-          result += get_bonus_potential(p_target,p_right)
-        elif target == 'M' or target == '_' and right == 'M' or right == '_':
-          result += get_bonus_potential(p_target, p_right)
-      
-      # verticaly
-      if p_down:
-        if target == '_' and down == '_':
-          result += get_work_potential(p_target, p_down)
-          result += get_bonus_potential(p_target,p_down)
-        elif p_down and target == 'M' or target == '_' and down == 'M' or down == '_':
-          result += get_bonus_potential(p_target, p_down)
+      result += _get_adjacent_score(target, next, p_target, p_next)
+
+  # horizontaly
+  for y in range(len(floor)):
+    for x in range(len(floor[y]) - 1):
+      target = floor[y][x]
+      next = floor[y][x + 1]
+
+      p_target = _get_dev_or_pm(x, y, devs_and_pms)
+      p_next = _get_dev_or_pm(x + 1, y, devs_and_pms)
+
+      if not (p_target and p_next):
+        continue
+
+      result += _get_adjacent_score(target, next, p_target, p_next)
   
   return result
 
